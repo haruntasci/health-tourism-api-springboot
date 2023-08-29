@@ -1,0 +1,26 @@
+package com.allianz.healthtourism.model.enums;
+
+public enum SpecialtyTypeEnum {
+
+    INTERNAL_MEDICINE,
+    PEDIATRICS,
+    OBSTETRICS_AND_GYNECOLOGY,
+    CARDIOLOGY,
+    DERMATOLOGY,
+    ORTHOPEDICS,
+    NEUROLOGY,
+    PSYCHIATRY,
+    SURGERY,
+    OPHTHALMOLOGY,
+    RADIOLOGY,
+    ANESTHESIOLOGY,
+    PATHOLOGY,
+    EMERGENCY_MEDICINE,
+    FAMILY_MEDICINE,
+    UROLOGY,
+    ONCOLOGY,
+    NEPHROLOGY,
+    PULMONOLOGY,
+    RHEUMATOLOGY
+
+}
