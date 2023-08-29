@@ -1,6 +1,7 @@
 package com.allianz.healthtourism.service;
 
 import com.allianz.healthtourism.database.entity.Doctor;
+import com.allianz.healthtourism.database.entity.Hospital;
 import com.allianz.healthtourism.database.repository.DoctorRepository;
 import com.allianz.healthtourism.database.specification.DoctorSpecification;
 import com.allianz.healthtourism.mapper.DoctorMapper;
@@ -12,6 +13,8 @@ import com.allianz.healthtourism.model.requestDTO.DoctorRequestDTO;
 import com.allianz.healthtourism.util.BaseService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
@@ -41,5 +44,19 @@ public class DoctorService extends BaseService<Doctor, DoctorDTO, DoctorRequestD
         doctor.setHospital(hospitalMapper.dtoToEntity(hospitalDTO));
         doctorRepository.save(doctor);
         return doctorMapper.entityToDto(doctor);
+    }
+
+    @Override
+    public DoctorDTO update(UUID uuid, DoctorRequestDTO requestDTO) {
+        Doctor doctor = doctorRepository.findByUuid(uuid).orElse(null);
+        if (doctor != null) {
+            Doctor doctorToSave = doctorMapper.requestDtoToExistEntity(requestDTO, doctor);
+            HospitalDTO hospitalDTO = hospitalService.getByUUID(requestDTO.getHospitalUUID());
+            doctorToSave.setHospital(hospitalMapper.dtoToEntity(hospitalDTO));
+            doctorRepository.save(doctorToSave);
+            return doctorMapper.entityToDto(doctorToSave);
+        } else {
+            return null;
+        }
     }
 }

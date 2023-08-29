@@ -12,6 +12,8 @@ import com.allianz.healthtourism.model.requestDTO.CityRequestDTO;
 import com.allianz.healthtourism.util.BaseService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class CityService extends BaseService<City, CityDTO, CityRequestDTO, CityRepository, CityMapper, CitySpecification> {
     private final CityRepository cityRepository;
@@ -19,7 +21,7 @@ public class CityService extends BaseService<City, CityDTO, CityRequestDTO, City
     private final CountryService countryService;
     private final CountryMapper countryMapper;
 
-    public CityService(CityRepository repository, CityMapper mapper,CitySpecification specification,
+    public CityService(CityRepository repository, CityMapper mapper, CitySpecification specification,
                        CityRepository cityRepository, CityMapper cityMapper,
                        CountryService countryService, CountryMapper countryMapper) {
         super(repository, mapper, specification);
@@ -37,5 +39,19 @@ public class CityService extends BaseService<City, CityDTO, CityRequestDTO, City
         city.setCountry(countryMapper.dtoToEntity(countryDTO));
         cityRepository.save(city);
         return cityMapper.entityToDto(city);
+    }
+
+    @Override
+    public CityDTO update(UUID uuid, CityRequestDTO requestDTO) {
+        City city = cityRepository.findByUuid(uuid).orElse(null);
+        if (city != null) {
+            City cityToSave = cityMapper.requestDtoToExistEntity(requestDTO, city);
+            CountryDTO countryDTO = countryService.getByUUID(requestDTO.getCountryUUID());
+            cityToSave.setCountry(countryMapper.dtoToEntity(countryDTO));
+            cityRepository.save(cityToSave);
+            return cityMapper.entityToDto(cityToSave);
+        } else {
+            return null;
+        }
     }
 }

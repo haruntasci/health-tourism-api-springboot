@@ -15,6 +15,8 @@ import com.allianz.healthtourism.model.requestDTO.TravelPlanRequestDTO;
 import com.allianz.healthtourism.util.BaseService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class TravelPlanService extends BaseService<TravelPlan, TravelPlanDTO, TravelPlanRequestDTO, TravelPlanRepository,
         TravelPlanMapper, TravelPlanSpecification> {
@@ -40,16 +42,35 @@ public class TravelPlanService extends BaseService<TravelPlan, TravelPlanDTO, Tr
     @Override
     public TravelPlanDTO save(TravelPlanRequestDTO requestDTO) {
         TravelPlan travelPlan = new TravelPlan();
-        Patient patient = patientRepository.findByUuid(requestDTO.getPatientUUID()).orElse(null);
-        FlightBooking flightBooking = flightBookingRepository.findByUuid(requestDTO.getFlightBookingUUID()).orElse(null);
-        HotelBooking hotelBooking = hotelBookingRepository.findByUuid(requestDTO.getHotelBookingUUID()).orElse(null);
-        if (patient != null && flightBooking != null && hotelBooking != null) {
-            travelPlan.setPatient(patient);
-            travelPlan.setFlightBooking(flightBooking);
-            travelPlan.setHotelBooking(hotelBooking);
-        }
+        updateTravelPlanFromRequest(travelPlan, requestDTO);
         travelPlanRepository.save(travelPlan);
         return travelPlanMapper.entityToDto(travelPlan);
+    }
 
+    @Override
+    public TravelPlanDTO update(UUID uuid, TravelPlanRequestDTO requestDTO) {
+        TravelPlan travelPlan = travelPlanRepository.findByUuid(uuid).orElse(null);
+        if (travelPlan != null) {
+            updateTravelPlanFromRequest(travelPlan, requestDTO);
+            travelPlanRepository.save(travelPlan);
+            return travelPlanMapper.entityToDto(travelPlan);
+        } else {
+            return null;
+        }
+    }
+
+    private void updateTravelPlanFromRequest(TravelPlan travelPlan, TravelPlanRequestDTO requestDTO) {
+        Patient patient = patientRepository.findByUuid(requestDTO.getPatientUUID()).orElse(null);
+        if (patient != null) {
+            travelPlan.setPatient(patient);
+        }
+        FlightBooking flightBooking = flightBookingRepository.findByUuid(requestDTO.getFlightBookingUUID()).orElse(null);
+        if (flightBooking != null) {
+            travelPlan.setFlightBooking(flightBooking);
+        }
+        HotelBooking hotelBooking = hotelBookingRepository.findByUuid(requestDTO.getHotelBookingUUID()).orElse(null);
+        if (hotelBooking != null) {
+            travelPlan.setHotelBooking(hotelBooking);
+        }
     }
 }

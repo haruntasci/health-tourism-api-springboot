@@ -52,6 +52,26 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     }
 
     @Override
+    public FlightBookingDTO update(UUID uuid, FlightBookingRequestDTO requestDTO) {
+        FlightBooking flightBooking = flightBookingRepository.findByUuid(uuid).orElse(null);
+        if (flightBooking != null) {
+            FlightBooking flightBookingToSave = flightBookingMapper.requestDtoToExistEntity(requestDTO, flightBooking);
+            Flight departureFlight = flightRepository.findByUuid(requestDTO.getDepartureFlightUUID()).orElse(null);
+            if (departureFlight != null) {
+                flightBookingToSave.setDepartureFlight(departureFlight);
+            }
+            Flight returnFlight = flightRepository.findByUuid(requestDTO.getReturnFlightUUID()).orElse(null);
+            if (returnFlight != null) {
+                flightBookingToSave.setReturnFlight(returnFlight);
+            }
+            flightBookingRepository.save(flightBookingToSave);
+            return flightBookingMapper.entityToDto(flightBookingToSave);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public Boolean deleteByUUID(UUID uuid) {
         FlightBooking flightBooking = flightBookingRepository.findByUuid(uuid).orElse(null);
         if (flightBooking != null) {

@@ -49,6 +49,22 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
     }
 
     @Override
+    public HotelBookingDTO update(UUID uuid, HotelBookingRequestDTO requestDTO) {
+        HotelBooking hotelBooking = hotelBookingRepository.findByUuid(uuid).orElse(null);
+        if (hotelBooking != null) {
+            HotelBooking hotelBookingToSave = hotelBookingMapper.requestDtoToExistEntity(requestDTO, hotelBooking);
+            Hotel hotel = hotelRepository.findByUuid(requestDTO.getHotelUUID()).orElse(null);
+            if (hotel != null) {
+                hotelBookingToSave.setHotel(hotel);
+            }
+            hotelBookingRepository.save(hotelBookingToSave);
+            return hotelBookingMapper.entityToDto(hotelBookingToSave);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public Boolean deleteByUUID(UUID uuid) {
         HotelBooking hotelBooking = hotelBookingRepository.findByUuid(uuid).orElse(null);
         if (hotelBooking != null) {
