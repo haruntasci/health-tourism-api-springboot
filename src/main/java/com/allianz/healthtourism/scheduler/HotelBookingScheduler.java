@@ -27,28 +27,61 @@ public class HotelBookingScheduler {
     }
 
     public void startEvaluation(UUID bookingUuid) {
-        scheduler.schedule(() -> evaluateBooking(bookingUuid), 30, TimeUnit.SECONDS);
         System.out.println("Entered into start evaluation");
+        if (!evaluateBookingIfValid(bookingUuid)) {
+            scheduleEvaluation(bookingUuid, 30, TimeUnit.SECONDS);
+        }
+    }
 
+    private boolean evaluateBookingIfValid(UUID bookingUuid) {
+        HotelBooking booking = getBookingByUUID(bookingUuid);
+        if (booking != null) {
+            Hotel hotel = booking.getHotel();
+            if (booking.isPaid() && hotel != null) {
+                confirmBooking(booking, hotel);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Transactional
     public void evaluateBooking(UUID bookingUuid) {
-        HotelBooking booking = hotelBookingRepository.findByUuid(bookingUuid).orElse(null);
+        HotelBooking booking = getBookingByUUID(bookingUuid);
         if (booking != null) {
             Hotel hotel = booking.getHotel();
-            if (booking.getIsPaid() && hotel != null) {
-                System.out.println("Booking confirmed: " + booking.getUuid());
-                hotel.setEmptyRoomCount(hotel.getEmptyRoomCount() - 1);
-                Hotel savedHotel = hotelRepository.save(hotel);
-                booking.setHotel(savedHotel);
-                booking.setIsConfirmed(true);
-                hotelBookingRepository.save(booking);
+            if (booking.isPaid() && hotel != null) {
+                confirmBooking(booking, hotel);
             } else {
-                System.out.println("Booking cancelled: " + booking.getUuid());
-                hotelBookingRepository.delete(booking);
+                cancelBooking(booking);
             }
         }
+    }
+
+    @Transactional
+    public void confirmBooking(HotelBooking booking, Hotel hotel) {
+        System.out.println("Booking confirmed: " + booking.getUuid());
+        hotel.setEmptyRoomCount(hotel.getEmptyRoomCount() - 1);
+        Hotel savedHotel = hotelRepository.save(hotel);
+        booking.setHotel(savedHotel);
+        booking.setConfirmed(true);
+        hotelBookingRepository.save(booking);
+    }
+
+    private void cancelBooking(HotelBooking booking) {
+        System.out.println("Booking cancelled: " + booking.getUuid());
+        hotelBookingRepository.delete(booking);
+    }
+
+    private HotelBooking getBookingByUUID(UUID bookingUuid) {
+        return hotelBookingRepository.findByUuid(bookingUuid).orElse(null);
+    }
+
+    private void scheduleEvaluation(UUID bookingUuid, long delay, TimeUnit timeUnit) {
+        scheduler.schedule(() -> evaluateBooking(bookingUuid), delay, timeUnit);
     }
 
 

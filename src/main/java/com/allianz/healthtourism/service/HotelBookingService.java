@@ -38,11 +38,7 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
     @Override
     public HotelBookingDTO save(HotelBookingRequestDTO requestDTO) {
         HotelBooking hotelBooking = new HotelBooking();
-        Hotel hotel = hotelRepository.findByUuid(requestDTO.getHotelUUID()).orElse(null);
-        if (hotel != null) {
-            hotelBooking.setHotel(hotel);
-        }
-        hotelBooking.setIsPaid(requestDTO.getIsPaid());
+        populateHotelBookingWithHotel(hotelBooking, requestDTO);
         HotelBooking savedHotelBooking = hotelBookingRepository.save(hotelBooking);
         hotelBookingScheduler.startEvaluation(savedHotelBooking.getUuid());
         return hotelBookingMapper.entityToDto(savedHotelBooking);
@@ -50,15 +46,11 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
 
     @Override
     public HotelBookingDTO update(UUID uuid, HotelBookingRequestDTO requestDTO) {
-        HotelBooking hotelBooking = hotelBookingRepository.findByUuid(uuid).orElse(null);
+        HotelBooking hotelBooking = getHotelBookingByUUID(uuid);
         if (hotelBooking != null) {
-            HotelBooking hotelBookingToSave = hotelBookingMapper.requestDtoToExistEntity(requestDTO, hotelBooking);
-            Hotel hotel = hotelRepository.findByUuid(requestDTO.getHotelUUID()).orElse(null);
-            if (hotel != null) {
-                hotelBookingToSave.setHotel(hotel);
-            }
-            hotelBookingRepository.save(hotelBookingToSave);
-            return hotelBookingMapper.entityToDto(hotelBookingToSave);
+            populateHotelBookingWithHotel(hotelBooking, requestDTO);
+            hotelBookingRepository.save(hotelBooking);
+            return hotelBookingMapper.entityToDto(hotelBooking);
         } else {
             return null;
         }
@@ -66,16 +58,28 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
 
     @Override
     public Boolean deleteByUUID(UUID uuid) {
-        HotelBooking hotelBooking = hotelBookingRepository.findByUuid(uuid).orElse(null);
-        if (hotelBooking != null) {
+        updateEmptyRoomsInHotel(uuid);
+        return super.deleteByUUID(uuid);
+    }
+
+    private void updateEmptyRoomsInHotel(UUID uuid) {
+        HotelBooking hotelBooking = getHotelBookingByUUID(uuid);
+        if (hotelBooking != null && hotelBooking.isConfirmed()) {
             Hotel hotel = hotelBooking.getHotel();
             hotel.setEmptyRoomCount(hotel.getEmptyRoomCount() + 1);
             hotelRepository.save(hotel);
         }
-        if (hotelBookingRepository.deleteByUuid(uuid) == 1) {
-            return true;
-        } else {
-            return false;
+    }
+
+    private void populateHotelBookingWithHotel(HotelBooking hotelBooking, HotelBookingRequestDTO requestDTO) {
+        Hotel hotel = hotelRepository.findByUuid(requestDTO.getHotelUUID()).orElse(null);
+        if (hotel != null) {
+            hotelBooking.setHotel(hotel);
         }
+        hotelBooking.setPaid(requestDTO.isPaid());
+    }
+
+    private HotelBooking getHotelBookingByUUID(UUID uuid) {
+        return hotelBookingRepository.findByUuid(uuid).orElse(null);
     }
 }

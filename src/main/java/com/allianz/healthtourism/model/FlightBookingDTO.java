@@ -9,6 +9,6 @@ import lombok.Data;
 public class FlightBookingDTO extends BaseDTO {
     private FlightDTO departureFlight;
     private FlightDTO returnFlight;
-    private Boolean isPaid;
-    private Boolean isConfirmed;
+    private boolean isPaid;
+    private boolean isConfirmed;
 }

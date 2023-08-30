@@ -28,4 +28,10 @@ public class Appointment extends BaseEntity {
 
     @Column
     private LocalDateTime appointmentDateTime = LocalDateTime.now();
+
+    @Column
+    private boolean isPaid;
+
+    @Column
+    private boolean isConfirmed;
 }

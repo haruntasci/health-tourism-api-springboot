@@ -25,30 +25,65 @@ public class FlightBookingScheduler {
     }
 
     public void startEvaluation(UUID bookingUuid) {
-        scheduler.schedule(() -> evaluateBooking(bookingUuid), 30, TimeUnit.SECONDS);
         System.out.println("Entered into start evaluation");
+        if (!evaluateBookingIfValid(bookingUuid)) {
+            scheduleEvaluation(bookingUuid, 2, TimeUnit.MINUTES);
+        }
+    }
+
+    private boolean evaluateBookingIfValid(UUID bookingUuid) {
+        FlightBooking booking = getBookingByUUID(bookingUuid);
+        if (booking != null) {
+            Flight departureFlight = booking.getDepartureFlight();
+            Flight returnFlight = booking.getReturnFlight();
+            if (booking.isPaid() && departureFlight != null && returnFlight != null) {
+                confirmBooking(booking, departureFlight, returnFlight);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Transactional
     public void evaluateBooking(UUID bookingUuid) {
-        FlightBooking booking = flightBookingRepository.findByUuid(bookingUuid).orElse(null);
+        FlightBooking booking = getBookingByUUID(bookingUuid);
         if (booking != null) {
             Flight departureFlight = booking.getDepartureFlight();
             Flight returnFlight = booking.getReturnFlight();
-            if (booking.getIsPaid() && departureFlight != null && returnFlight != null) {
-                System.out.println("Booking confirmed: " + booking.getUuid());
-                departureFlight.setEmptySeatCount(departureFlight.getEmptySeatCount() - 1);
-                returnFlight.setEmptySeatCount(returnFlight.getEmptySeatCount() - 1);
-                Flight savedDepartureFlight = flightRepository.save(departureFlight);
-                Flight savedReturnFlight = flightRepository.save(returnFlight);
-                booking.setDepartureFlight(savedDepartureFlight);
-                booking.setReturnFlight(savedReturnFlight);
-                booking.setIsConfirmed(true);
-                flightBookingRepository.save(booking);
+            if (booking.isPaid() && departureFlight != null && returnFlight != null) {
+                confirmBooking(booking, departureFlight, returnFlight);
             } else {
-                System.out.println("Booking cancelled: " + booking.getUuid());
-                flightBookingRepository.delete(booking);
+                cancelBooking(booking);
             }
         }
+    }
+
+    private FlightBooking getBookingByUUID(UUID bookingUuid) {
+        return flightBookingRepository.findByUuid(bookingUuid).orElse(null);
+    }
+
+    @Transactional
+    public void confirmBooking(FlightBooking booking, Flight departureFlight, Flight returnFlight) {
+        System.out.println("Booking confirmed: " + booking.getUuid());
+        departureFlight.setEmptySeatCount(departureFlight.getEmptySeatCount() - 1);
+        returnFlight.setEmptySeatCount(returnFlight.getEmptySeatCount() - 1);
+        Flight savedDepartureFlight = flightRepository.save(departureFlight);
+        Flight savedReturnFlight = flightRepository.save(returnFlight);
+        booking.setDepartureFlight(savedDepartureFlight);
+        booking.setReturnFlight(savedReturnFlight);
+        booking.setConfirmed(true);
+        flightBookingRepository.save(booking);
+    }
+
+    private void cancelBooking(FlightBooking booking) {
+        System.out.println("Booking cancelled: " + booking.getUuid());
+        flightBookingRepository.delete(booking);
+    }
+
+    private void scheduleEvaluation(UUID bookingUuid, long delay, TimeUnit timeUnit) {
+        scheduler.schedule(() -> evaluateBooking(bookingUuid), delay, timeUnit);
     }
 }

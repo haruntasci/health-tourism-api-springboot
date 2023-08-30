@@ -16,4 +16,6 @@ public class AppointmentDTO extends BaseDTO {
     private DoctorDTO doctor;
     private MedicalRecordDTO medicalRecord;
     private LocalDateTime appointmentDateTime;
+    private boolean isPaid;
+    private boolean isConfirmed;
 }

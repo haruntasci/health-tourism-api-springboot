@@ -42,8 +42,7 @@ public class TravelPlanService extends BaseService<TravelPlan, TravelPlanDTO, Tr
     @Override
     public TravelPlanDTO save(TravelPlanRequestDTO requestDTO) {
         TravelPlan travelPlan = new TravelPlan();
-        updateTravelPlanFromRequest(travelPlan, requestDTO);
-        travelPlanRepository.save(travelPlan);
+        populateTravelPlanWithObjects(travelPlan, requestDTO);
         return travelPlanMapper.entityToDto(travelPlan);
     }
 
@@ -51,15 +50,14 @@ public class TravelPlanService extends BaseService<TravelPlan, TravelPlanDTO, Tr
     public TravelPlanDTO update(UUID uuid, TravelPlanRequestDTO requestDTO) {
         TravelPlan travelPlan = travelPlanRepository.findByUuid(uuid).orElse(null);
         if (travelPlan != null) {
-            updateTravelPlanFromRequest(travelPlan, requestDTO);
-            travelPlanRepository.save(travelPlan);
+            populateTravelPlanWithObjects(travelPlan, requestDTO);
             return travelPlanMapper.entityToDto(travelPlan);
         } else {
             return null;
         }
     }
 
-    private void updateTravelPlanFromRequest(TravelPlan travelPlan, TravelPlanRequestDTO requestDTO) {
+    private void populateTravelPlanWithObjects(TravelPlan travelPlan, TravelPlanRequestDTO requestDTO) {
         Patient patient = patientRepository.findByUuid(requestDTO.getPatientUUID()).orElse(null);
         if (patient != null) {
             travelPlan.setPatient(patient);
@@ -72,5 +70,6 @@ public class TravelPlanService extends BaseService<TravelPlan, TravelPlanDTO, Tr
         if (hotelBooking != null) {
             travelPlan.setHotelBooking(hotelBooking);
         }
+        travelPlanRepository.save(travelPlan);
     }
 }

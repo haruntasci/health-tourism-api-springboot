@@ -17,8 +17,8 @@ public class HotelBooking extends BaseEntity {
         @ManyToOne
         private Hotel hotel;
         @Column
-        private Boolean isPaid;
+        private boolean isPaid;
         @Column
-        private Boolean isConfirmed;
+        private boolean isConfirmed;
 }
 

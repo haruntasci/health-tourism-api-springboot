@@ -2,6 +2,7 @@ package com.allianz.healthtourism.service;
 
 import com.allianz.healthtourism.database.entity.City;
 import com.allianz.healthtourism.database.entity.Hotel;
+import com.allianz.healthtourism.database.repository.CityRepository;
 import com.allianz.healthtourism.database.repository.HotelRepository;
 import com.allianz.healthtourism.database.specification.HotelSpecification;
 import com.allianz.healthtourism.mapper.CityMapper;
@@ -20,29 +21,21 @@ public class HotelService extends BaseService<Hotel, HotelDTO, HotelRequestDTO, 
 
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
-    private final CityService cityService;
-    private final CityMapper cityMapper;
+    private final CityRepository cityRepository;
 
-    public HotelService(HotelRepository repository, HotelMapper mapper, HotelSpecification specification,
-                        HotelRepository hotelRepository,
-                        HotelMapper hotelMapper, CityService cityService, CityMapper cityMapper) {
+    public HotelService(HotelRepository repository, HotelMapper mapper,
+                        HotelSpecification specification, HotelRepository hotelRepository,
+                        HotelMapper hotelMapper, CityRepository cityRepository) {
         super(repository, mapper, specification);
         this.hotelRepository = hotelRepository;
         this.hotelMapper = hotelMapper;
-        this.cityService = cityService;
-        this.cityMapper = cityMapper;
+        this.cityRepository = cityRepository;
     }
 
     @Override
     public HotelDTO save(HotelRequestDTO requestDTO) {
-        Hotel hotel = new Hotel();
-        CityDTO cityDTO = cityService.getByUUID(requestDTO.getCityUUID());
-        hotel.setCity(cityMapper.dtoToEntity(cityDTO));
-        hotel.setCheckIn(requestDTO.getCheckIn());
-        hotel.setCheckOut(requestDTO.getCheckOut());
-        hotel.setEmptyRoomCount(requestDTO.getEmptyRoomCount());
-        hotel.setTotalRoomCount(requestDTO.getTotalRoomCount());
-        hotelRepository.save(hotel);
+        Hotel hotel = hotelMapper.requestDtoToEntity(requestDTO);
+        populateHotelWithCityAndSave(hotel, requestDTO);
         return hotelMapper.entityToDto(hotel);
     }
 
@@ -50,13 +43,19 @@ public class HotelService extends BaseService<Hotel, HotelDTO, HotelRequestDTO, 
     public HotelDTO update(UUID uuid, HotelRequestDTO requestDTO) {
         Hotel hotel = hotelRepository.findByUuid(uuid).orElse(null);
         if (hotel != null) {
-            Hotel hotelToSave = hotelMapper.requestDtoToExistEntity(requestDTO, hotel);
-            CityDTO cityDTO = cityService.getByUUID(requestDTO.getCityUUID());
-            hotelToSave.setCity(cityMapper.dtoToEntity(cityDTO));
-            hotelRepository.save(hotelToSave);
-            return hotelMapper.entityToDto(hotelToSave);
+            hotel = hotelMapper.requestDtoToExistEntity(requestDTO, hotel);
+            populateHotelWithCityAndSave(hotel, requestDTO);
+            return hotelMapper.entityToDto(hotel);
         } else {
             return null;
         }
+    }
+
+    private void populateHotelWithCityAndSave(Hotel hotel, HotelRequestDTO requestDTO) {
+        City city = cityRepository.findByUuid(requestDTO.getCityUUID()).orElse(null);
+        if (city != null) {
+            hotel.setCity(city);
+        }
+        hotelRepository.save(hotel);
     }
 }

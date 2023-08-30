@@ -9,5 +9,5 @@ import java.util.UUID;
 public class FlightBookingRequestDTO extends BaseRequestDTO {
     private UUID departureFlightUUID;
     private UUID returnFlightUUID;
-    private Boolean isPaid;
+    private boolean isPaid;
 }

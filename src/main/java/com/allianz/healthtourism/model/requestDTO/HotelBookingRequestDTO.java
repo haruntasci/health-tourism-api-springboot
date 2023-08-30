@@ -8,5 +8,5 @@ import java.util.UUID;
 @Data
 public class HotelBookingRequestDTO extends BaseRequestDTO {
     private UUID hotelUUID;
-    private Boolean isPaid;
+    private boolean isPaid;
 }

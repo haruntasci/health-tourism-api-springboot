@@ -2,9 +2,9 @@ package com.allianz.healthtourism.service;
 
 import com.allianz.healthtourism.database.entity.City;
 import com.allianz.healthtourism.database.entity.Hospital;
+import com.allianz.healthtourism.database.repository.CityRepository;
 import com.allianz.healthtourism.database.repository.HospitalRepository;
 import com.allianz.healthtourism.database.specification.HospitalSpecification;
-import com.allianz.healthtourism.database.specification.HotelSpecification;
 import com.allianz.healthtourism.mapper.CityMapper;
 import com.allianz.healthtourism.mapper.HospitalMapper;
 import com.allianz.healthtourism.model.CityDTO;
@@ -21,26 +21,21 @@ public class HospitalService extends BaseService<Hospital, HospitalDTO, Hospital
 
     private final HospitalRepository hospitalRepository;
     private final HospitalMapper hospitalMapper;
-    private final CityService cityService;
-    private final CityMapper cityMapper;
+    private final CityRepository cityRepository;
 
     public HospitalService(HospitalRepository repository, HospitalMapper mapper, HospitalSpecification specification,
                            HospitalRepository hospitalRepository, HospitalMapper hospitalMapper,
-                           CityService cityService, CityMapper cityMapper) {
+                           CityService cityService, CityMapper cityMapper, CityRepository cityRepository) {
         super(repository, mapper, specification);
         this.hospitalRepository = hospitalRepository;
         this.hospitalMapper = hospitalMapper;
-        this.cityService = cityService;
-        this.cityMapper = cityMapper;
+        this.cityRepository = cityRepository;
     }
 
     @Override
     public HospitalDTO save(HospitalRequestDTO requestDTO) {
-        Hospital hospital = new Hospital();
-        hospital.setName(requestDTO.getName());
-        CityDTO cityDTO = cityService.getByUUID(requestDTO.getCityUUID());
-        hospital.setCity(cityMapper.dtoToEntity(cityDTO));
-        hospitalRepository.save(hospital);
+        Hospital hospital = hospitalMapper.requestDtoToEntity(requestDTO);
+        populateHospitalWithCityAndSave(hospital, requestDTO);
         return hospitalMapper.entityToDto(hospital);
     }
 
@@ -48,13 +43,19 @@ public class HospitalService extends BaseService<Hospital, HospitalDTO, Hospital
     public HospitalDTO update(UUID uuid, HospitalRequestDTO requestDTO) {
         Hospital hospital = hospitalRepository.findByUuid(uuid).orElse(null);
         if (hospital != null) {
-            CityDTO cityDTO = cityService.getByUUID(requestDTO.getCityUUID());
-            hospital.setCity(cityMapper.dtoToEntity(cityDTO));
-            hospital.setName(requestDTO.getName());
-            hospitalRepository.save(hospital);
+            hospital = hospitalMapper.requestDtoToExistEntity(requestDTO, hospital);
+            populateHospitalWithCityAndSave(hospital, requestDTO);
             return hospitalMapper.entityToDto(hospital);
         } else {
             return null;
         }
+    }
+
+    private void populateHospitalWithCityAndSave(Hospital hospital, HospitalRequestDTO requestDTO) {
+        City city = cityRepository.findByUuid(requestDTO.getCityUUID()).orElse(null);
+        if (city != null) {
+            hospital.setCity(city);
+        }
+        hospitalRepository.save(hospital);
     }
 }

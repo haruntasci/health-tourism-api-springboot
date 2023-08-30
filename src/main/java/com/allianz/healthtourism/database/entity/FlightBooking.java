@@ -22,9 +22,9 @@ public class FlightBooking extends BaseEntity {
     @ManyToOne
     private Flight returnFlight;
     @Column
-    private Boolean isPaid;
+    private boolean isPaid;
     @Column
-    private Boolean isConfirmed;
+    private boolean isConfirmed;
 }
 
 

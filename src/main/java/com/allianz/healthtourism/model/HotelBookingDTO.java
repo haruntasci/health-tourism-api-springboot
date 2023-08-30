@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class HotelBookingDTO extends BaseDTO {
     private HotelDTO hotel;
-    private Boolean isPaid;
-    private Boolean isConfirmed;
+    private boolean isPaid;
+    private boolean isConfirmed;
 }

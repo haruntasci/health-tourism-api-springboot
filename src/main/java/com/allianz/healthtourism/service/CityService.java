@@ -3,6 +3,7 @@ package com.allianz.healthtourism.service;
 import com.allianz.healthtourism.database.entity.City;
 import com.allianz.healthtourism.database.entity.Country;
 import com.allianz.healthtourism.database.repository.CityRepository;
+import com.allianz.healthtourism.database.repository.CountryRepository;
 import com.allianz.healthtourism.database.specification.CitySpecification;
 import com.allianz.healthtourism.mapper.CityMapper;
 import com.allianz.healthtourism.mapper.CountryMapper;
@@ -18,26 +19,21 @@ import java.util.UUID;
 public class CityService extends BaseService<City, CityDTO, CityRequestDTO, CityRepository, CityMapper, CitySpecification> {
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
-    private final CountryService countryService;
-    private final CountryMapper countryMapper;
+    private final CountryRepository countryRepository;
 
     public CityService(CityRepository repository, CityMapper mapper, CitySpecification specification,
                        CityRepository cityRepository, CityMapper cityMapper,
-                       CountryService countryService, CountryMapper countryMapper) {
+                       CountryService countryService, CountryMapper countryMapper, CountryRepository countryRepository) {
         super(repository, mapper, specification);
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
-        this.countryService = countryService;
-        this.countryMapper = countryMapper;
+        this.countryRepository = countryRepository;
     }
 
     @Override
     public CityDTO save(CityRequestDTO requestDTO) {
-        City city = new City();
-        city.setName(requestDTO.getName());
-        CountryDTO countryDTO = countryService.getByUUID(requestDTO.getCountryUUID());
-        city.setCountry(countryMapper.dtoToEntity(countryDTO));
-        cityRepository.save(city);
+        City city = cityMapper.requestDtoToEntity(requestDTO);
+        populateCityWithCountryAndSave(city, requestDTO);
         return cityMapper.entityToDto(city);
     }
 
@@ -45,13 +41,19 @@ public class CityService extends BaseService<City, CityDTO, CityRequestDTO, City
     public CityDTO update(UUID uuid, CityRequestDTO requestDTO) {
         City city = cityRepository.findByUuid(uuid).orElse(null);
         if (city != null) {
-            City cityToSave = cityMapper.requestDtoToExistEntity(requestDTO, city);
-            CountryDTO countryDTO = countryService.getByUUID(requestDTO.getCountryUUID());
-            cityToSave.setCountry(countryMapper.dtoToEntity(countryDTO));
-            cityRepository.save(cityToSave);
-            return cityMapper.entityToDto(cityToSave);
+            city = cityMapper.requestDtoToExistEntity(requestDTO, city);
+            populateCityWithCountryAndSave(city, requestDTO);
+            return cityMapper.entityToDto(city);
         } else {
             return null;
         }
+    }
+
+    private void populateCityWithCountryAndSave(City city, CityRequestDTO requestDTO) {
+        Country country = countryRepository.findByUuid(requestDTO.getCountryUUID()).orElse(null);
+        if (country != null) {
+            city.setCountry(country);
+        }
+        cityRepository.save(city);
     }
 }

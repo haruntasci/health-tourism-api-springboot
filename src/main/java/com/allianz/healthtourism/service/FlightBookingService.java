@@ -37,15 +37,7 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     @Override
     public FlightBookingDTO save(FlightBookingRequestDTO requestDTO) {
         FlightBooking flightBooking = new FlightBooking();
-        Flight departureFlight = flightRepository.findByUuid(requestDTO.getDepartureFlightUUID()).orElse(null);
-        Flight returnFlight = flightRepository.findByUuid(requestDTO.getReturnFlightUUID()).orElse(null);
-        if (departureFlight != null) {
-            flightBooking.setDepartureFlight(departureFlight);
-        }
-        if (returnFlight != null) {
-            flightBooking.setReturnFlight(returnFlight);
-        }
-        flightBooking.setIsPaid(requestDTO.getIsPaid());
+        populateFlightBookingWithObjects(flightBooking, requestDTO);
         FlightBooking savedBooking = flightBookingRepository.save(flightBooking);
         flightBookingScheduler.startEvaluation(savedBooking.getUuid());
         return flightBookingMapper.entityToDto(savedBooking);
@@ -53,19 +45,11 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
 
     @Override
     public FlightBookingDTO update(UUID uuid, FlightBookingRequestDTO requestDTO) {
-        FlightBooking flightBooking = flightBookingRepository.findByUuid(uuid).orElse(null);
+        FlightBooking flightBooking = getFlightBookingByUUID(uuid);
         if (flightBooking != null) {
-            FlightBooking flightBookingToSave = flightBookingMapper.requestDtoToExistEntity(requestDTO, flightBooking);
-            Flight departureFlight = flightRepository.findByUuid(requestDTO.getDepartureFlightUUID()).orElse(null);
-            if (departureFlight != null) {
-                flightBookingToSave.setDepartureFlight(departureFlight);
-            }
-            Flight returnFlight = flightRepository.findByUuid(requestDTO.getReturnFlightUUID()).orElse(null);
-            if (returnFlight != null) {
-                flightBookingToSave.setReturnFlight(returnFlight);
-            }
-            flightBookingRepository.save(flightBookingToSave);
-            return flightBookingMapper.entityToDto(flightBookingToSave);
+            populateFlightBookingWithObjects(flightBooking, requestDTO);
+            flightBookingRepository.save(flightBooking);
+            return flightBookingMapper.entityToDto(flightBooking);
         } else {
             return null;
         }
@@ -73,19 +57,35 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
 
     @Override
     public Boolean deleteByUUID(UUID uuid) {
-        FlightBooking flightBooking = flightBookingRepository.findByUuid(uuid).orElse(null);
-        if (flightBooking != null) {
+        updateEmptySeatCountsInFlights(uuid);
+        return super.deleteByUUID(uuid);
+    }
+
+    private void populateFlightBookingWithObjects(FlightBooking booking, FlightBookingRequestDTO requestDTO) {
+        Flight departureFlight = flightRepository.findByUuid(requestDTO.getDepartureFlightUUID()).orElse(null);
+        if (departureFlight != null) {
+            booking.setDepartureFlight(departureFlight);
+        }
+        Flight returnFlight = flightRepository.findByUuid(requestDTO.getReturnFlightUUID()).orElse(null);
+        if (returnFlight != null) {
+            booking.setReturnFlight(returnFlight);
+        }
+        booking.setPaid(requestDTO.isPaid());
+    }
+
+    private FlightBooking getFlightBookingByUUID(UUID uuid) {
+        return flightBookingRepository.findByUuid(uuid).orElse(null);
+    }
+
+    private void updateEmptySeatCountsInFlights(UUID uuid) {
+        FlightBooking flightBooking = getFlightBookingByUUID(uuid);
+        if (flightBooking != null && flightBooking.isConfirmed()) {
             Flight departureFlight = flightBooking.getDepartureFlight();
             Flight returnFlight = flightBooking.getReturnFlight();
             departureFlight.setEmptySeatCount(departureFlight.getEmptySeatCount() + 1);
             returnFlight.setEmptySeatCount(returnFlight.getEmptySeatCount() + 1);
             flightRepository.save(departureFlight);
             flightRepository.save(returnFlight);
-        }
-        if (flightBookingRepository.deleteByUuid(uuid) == 1) {
-            return true;
-        } else {
-            return false;
         }
     }
 }
