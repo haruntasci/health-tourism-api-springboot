@@ -15,5 +15,4 @@ public class AppointmentRequestDTO extends BaseRequestDTO {
     private UUID doctorUUID;
     private LocalDateTime appointmentDateTime;
     private boolean isPaid;
-    private boolean isConfirmed;
 }
