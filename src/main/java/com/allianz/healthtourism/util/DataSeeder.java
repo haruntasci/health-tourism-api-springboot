@@ -2,6 +2,7 @@ package com.allianz.healthtourism.util;
 
 import com.allianz.healthtourism.database.entity.City;
 import com.allianz.healthtourism.database.entity.Country;
+import com.allianz.healthtourism.database.entity.Patient;
 import com.allianz.healthtourism.database.repository.CityRepository;
 import com.allianz.healthtourism.database.repository.CountryRepository;
 import com.allianz.healthtourism.database.repository.FlightRepository;
@@ -57,6 +58,7 @@ public class DataSeeder implements CommandLineRunner {
             brussels.setName("Brüssels");
             brussels.setCountry(savedBelgium);
             cityRepository.save(brussels);
+
         }
     }
 }

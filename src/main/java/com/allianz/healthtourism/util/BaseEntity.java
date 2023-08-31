@@ -8,6 +8,8 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -38,6 +40,14 @@ public class BaseEntity {
     @PrePersist
     protected void onCreate() {
         setUuid(java.util.UUID.randomUUID());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username="";
+        if(authentication == null || !authentication.isAuthenticated()){
+            username = "anonymous";
+        }else{
+            username = authentication.getPrincipal().toString();
+        }
+        setCreatedBy(username);
     }
 
 

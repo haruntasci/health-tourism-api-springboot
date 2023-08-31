@@ -27,7 +27,7 @@ public class FlightBookingScheduler {
     public void startEvaluation(UUID bookingUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(bookingUuid)) {
-            scheduleEvaluation(bookingUuid, 2, TimeUnit.MINUTES);
+            scheduleEvaluation(bookingUuid, 10, TimeUnit.MINUTES);
         }
     }
 

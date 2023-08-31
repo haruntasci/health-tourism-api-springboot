@@ -23,7 +23,7 @@ public class AppointmentScheduler {
     public void startEvaluation(UUID appointmentUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(appointmentUuid)) {
-            scheduleEvaluation(appointmentUuid, 30, TimeUnit.SECONDS);
+            scheduleEvaluation(appointmentUuid, 10, TimeUnit.MINUTES);
         }
     }
 

@@ -29,7 +29,7 @@ public class HotelBookingScheduler {
     public void startEvaluation(UUID bookingUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(bookingUuid)) {
-            scheduleEvaluation(bookingUuid, 30, TimeUnit.SECONDS);
+            scheduleEvaluation(bookingUuid, 10, TimeUnit.MINUTES);
         }
     }
 
