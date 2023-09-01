@@ -57,12 +57,6 @@ public class SecurityConfiguration {
             "/hospital"
     };
 
-    private static final String[] DOCTOR_WHITELIST = {
-
-            "/medical-record/**",
-            "/medical-record"
-
-    };
     private static final String[] ADMIN_PATIENT_COMMON_WHITELIST = {
             "/city/**",
             "/city",
@@ -73,17 +67,21 @@ public class SecurityConfiguration {
             "/flight-booking/**",
             "/flight-booking",
             "/hotel-booking/**",
-            "/hotel-booking"
+            "/hotel-booking",
+            "/travel-plan/**",
+            "/travel-plan"
     };
-    private static final String[] DOCTOR_PATIENT_COMMON_WHITELIST = {
-            "/appointment/**",
-            "/appointment",
-            "/patient/**",
-            "/patient"
+    private static final String[] ADMIN_DOCTOR_COMMON_WHITELIST = {
+            "/medical-record/**",
+            "/medical-record"
     };
     private static final String[] COMMON_WHITELIST = {
             "/doctor/**",
             "/doctor",
+            "/patient/**",
+            "/patient",
+            "/appointment/**",
+            "/appointment"
     };
 
 
@@ -105,11 +103,10 @@ public class SecurityConfiguration {
                 }).and()
                 .authorizeHttpRequests()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
-                .requestMatchers(ADMIN_WHITELIST).hasAnyRole("admin")
+                .requestMatchers(ADMIN_WHITELIST).hasRole("admin")
                 .requestMatchers(COMMON_WHITELIST).hasAnyRole("admin","patient","doctor")
                 .requestMatchers(ADMIN_PATIENT_COMMON_WHITELIST).hasAnyRole("admin", "patient")
-                .requestMatchers(DOCTOR_PATIENT_COMMON_WHITELIST).hasAnyRole("doctor", "patient")
-                .requestMatchers(DOCTOR_WHITELIST).hasAnyRole("doctor")
+                .requestMatchers(ADMIN_DOCTOR_COMMON_WHITELIST).hasAnyRole("admin", "doctor")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()

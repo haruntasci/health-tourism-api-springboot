@@ -49,6 +49,16 @@ public class UserService {
         userRepository.save(adminUser);
     }
 
+    public String deleteAdmin(String email) {
+        User adminUser = userRepository.findByEmail(email).orElse(null);
+        if (adminUser != null) {
+            userRepository.delete(adminUser);
+            return "Delete success";
+        } else {
+            return "Delete error";
+        }
+    }
+
     public void saveDoctorUser(UserRequestDTO requestDTO) {
         User doctorUser = userMapper.requestDtoToEntity(requestDTO);
         doctorUser.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
@@ -66,12 +76,21 @@ public class UserService {
         doctorUser.setRoles(roleList);
         userRepository.save(doctorUser);
     }
+    public String deleteDoctor(String email) {
+        User doctorUser = userRepository.findByEmail(email).orElse(null);
+        if (doctorUser != null) {
+            userRepository.delete(doctorUser);
+            return "Delete success";
+        } else {
+            return "Delete error";
+        }
+    }
 
     public void savePatientUser(UserRequestDTO requestDTO) {
         User patientUser = userMapper.requestDtoToEntity(requestDTO);
         patientUser.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
         Set<Role> roleList = new HashSet<>();
-        Role patient = roleRepository.findByName("doctor").orElse(null);
+        Role patient = roleRepository.findByName("patient").orElse(null);
         if (patient != null) {
             roleList.add(patient);
         } else {
@@ -83,6 +102,15 @@ public class UserService {
         }
         patientUser.setRoles(roleList);
         userRepository.save(patientUser);
+    }
+    public String deletePatient(String email) {
+        User patientUser = userRepository.findByEmail(email).orElse(null);
+        if (patientUser != null) {
+            userRepository.delete(patientUser);
+            return "Delete success";
+        } else {
+            return "Delete error";
+        }
     }
 
 }

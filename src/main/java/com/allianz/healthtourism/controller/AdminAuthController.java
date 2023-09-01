@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,4 +45,8 @@ public class AdminAuthController {
         return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 
+    @DeleteMapping("delete/{email}")
+    private ResponseEntity<String> deleteAdmin(@PathVariable String email) {
+        return new ResponseEntity<>(userService.deleteAdmin(email), HttpStatus.OK);
+    }
 }
