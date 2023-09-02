@@ -1,7 +1,7 @@
 package com.allianz.healthtourism.model;
 
 import com.allianz.healthtourism.model.enums.SpecialtyTypeEnum;
-import com.allianz.healthtourism.util.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
 import lombok.Data;
 
 

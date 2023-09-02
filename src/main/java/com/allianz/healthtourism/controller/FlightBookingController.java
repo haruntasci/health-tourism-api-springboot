@@ -7,7 +7,7 @@ import com.allianz.healthtourism.mapper.FlightBookingMapper;
 import com.allianz.healthtourism.model.FlightBookingDTO;
 import com.allianz.healthtourism.model.requestDTO.FlightBookingRequestDTO;
 import com.allianz.healthtourism.service.FlightBookingService;
-import com.allianz.healthtourism.util.BaseController;
+import com.allianz.healthtourism.util.base.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,4 +1,4 @@
-package com.allianz.healthtourism.util;
+package com.allianz.healthtourism.util.specification;
 
 import com.allianz.healthtourism.model.enums.OperationTypeEnum;
 import lombok.Data;

@@ -1,18 +1,16 @@
-package com.allianz.healthtourism.database.specification;
+package com.allianz.healthtourism.util.base;
 
-import com.allianz.healthtourism.database.entity.*;
 import com.allianz.healthtourism.model.enums.OperationTypeEnum;
-import com.allianz.healthtourism.util.BaseSpecification;
-import com.allianz.healthtourism.util.SearchCriteria;
+import com.allianz.healthtourism.util.specification.SearchCriteria;
 import jakarta.persistence.criteria.*;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class TravelPlanSpecification extends BaseSpecification<TravelPlan> {
+public abstract class BaseSpecification<Entity extends BaseEntity> implements Specification<Entity> {
+
     private List<SearchCriteria> criteriaList;
 
     public List<SearchCriteria> getCriteriaList() {
@@ -24,7 +22,7 @@ public class TravelPlanSpecification extends BaseSpecification<TravelPlan> {
     }
 
     @Override
-    public Predicate toPredicate(Root<TravelPlan> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<Entity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
         for (SearchCriteria criteria : criteriaList) {
@@ -44,15 +42,8 @@ public class TravelPlanSpecification extends BaseSpecification<TravelPlan> {
                 predicate = criteriaBuilder.lessThanOrEqualTo(
                         root.<String>get(criteria.getKey()), criteria.getValue().toString());
             } else if (criteria.getOperation().equals(OperationTypeEnum.EQUAL)) {
-
-                if (criteria.getKey().equals("patient")) {
-                    Join<TravelPlan, Patient> joinPatient = root.join("patient");
-                    predicate = criteriaBuilder.equal(joinPatient.get("identityNumber"), criteria.getValue());
-                }  else {
-                    predicate = criteriaBuilder.equal(
-                            root.<String>get(criteria.getKey()), criteria.getValue().toString());
-                }
-
+                predicate = criteriaBuilder.equal(
+                        root.<String>get(criteria.getKey()), criteria.getValue().toString());
             } else if (criteria.getOperation().equals(OperationTypeEnum.LIKE)) {
                 if (root.get(criteria.getKey()).getJavaType() == String.class) {
                     predicate = criteriaBuilder.like(
@@ -63,7 +54,29 @@ public class TravelPlanSpecification extends BaseSpecification<TravelPlan> {
                     predicate = criteriaBuilder.equal(
                             root.<String>get(criteria.getKey()), criteria.getValue().toString());
                 }
-            }  else {
+            }
+            else if (criteria.getOperation().equals(OperationTypeEnum.AFTER_TODAY)) {
+                OffsetDateTime afterDateTime = OffsetDateTime.parse(criteria.getValue().toString());
+                predicate = criteriaBuilder.greaterThan(
+                        root.<OffsetDateTime>get(criteria.getKey()), afterDateTime);
+            }
+            else if (criteria.getOperation().equals(OperationTypeEnum.AFTER_TODAY_INCLUDED)) {
+                OffsetDateTime afterDateTime = OffsetDateTime.parse(criteria.getValue().toString());
+                predicate = criteriaBuilder.greaterThanOrEqualTo(
+                        root.<OffsetDateTime>get(criteria.getKey()), afterDateTime);
+            }
+            else if (criteria.getOperation().equals(OperationTypeEnum.BEFORE_TODAY)) {
+                OffsetDateTime afterDateTime = OffsetDateTime.parse(criteria.getValue().toString());
+                predicate = criteriaBuilder.lessThan(
+                        root.<OffsetDateTime>get(criteria.getKey()), afterDateTime);
+            }
+            else if (criteria.getOperation().equals(OperationTypeEnum.BEFORE_TODAY_INCLUDED)) {
+                OffsetDateTime afterDateTime = OffsetDateTime.parse(criteria.getValue().toString());
+                predicate = criteriaBuilder.lessThanOrEqualTo(
+                        root.<OffsetDateTime>get(criteria.getKey()), afterDateTime);
+            }
+
+            else {
                 continue;
             }
 

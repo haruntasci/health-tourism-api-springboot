@@ -1,7 +1,7 @@
 package com.allianz.healthtourism.model;
 
 
-import com.allianz.healthtourism.util.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class FlightDTO extends BaseDTO {
     private CityDTO departureCity;
     private CityDTO arrivalCity;
     private LocalDateTime departureTime;
-    private LocalDateTime landingTime;
+    private LocalDateTime arrivalTime;
     private Integer totalSeatCount;
     private Integer emptySeatCount;
 }

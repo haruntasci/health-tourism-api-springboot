@@ -1,10 +1,8 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.BaseEntity;
+import com.allianz.healthtourism.util.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Table
 @Entity
@@ -17,6 +15,8 @@ import java.util.UUID;
 @Data
 public class FlightBooking extends BaseEntity {
 
+    @OneToOne
+    private Appointment appointment;
     @ManyToOne
     private Flight departureFlight;
     @ManyToOne

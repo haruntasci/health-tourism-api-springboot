@@ -1,6 +1,6 @@
 package com.allianz.healthtourism.model;
 
-import com.allianz.healthtourism.util.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
 import lombok.Data;
 import org.springframework.data.domain.Sort;
 

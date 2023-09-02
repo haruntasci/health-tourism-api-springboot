@@ -5,12 +5,10 @@ import com.allianz.healthtourism.database.entity.Hotel;
 import com.allianz.healthtourism.database.repository.CityRepository;
 import com.allianz.healthtourism.database.repository.HotelRepository;
 import com.allianz.healthtourism.database.specification.HotelSpecification;
-import com.allianz.healthtourism.mapper.CityMapper;
 import com.allianz.healthtourism.mapper.HotelMapper;
-import com.allianz.healthtourism.model.CityDTO;
 import com.allianz.healthtourism.model.HotelDTO;
 import com.allianz.healthtourism.model.requestDTO.HotelRequestDTO;
-import com.allianz.healthtourism.util.BaseService;
+import com.allianz.healthtourism.util.base.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

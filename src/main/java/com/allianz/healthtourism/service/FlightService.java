@@ -5,12 +5,10 @@ import com.allianz.healthtourism.database.entity.Flight;
 import com.allianz.healthtourism.database.repository.CityRepository;
 import com.allianz.healthtourism.database.repository.FlightRepository;
 import com.allianz.healthtourism.database.specification.FlightSpecification;
-import com.allianz.healthtourism.mapper.CityMapper;
 import com.allianz.healthtourism.mapper.FlightMapper;
-import com.allianz.healthtourism.model.CityDTO;
 import com.allianz.healthtourism.model.FlightDTO;
 import com.allianz.healthtourism.model.requestDTO.FlightRequestDTO;
-import com.allianz.healthtourism.util.BaseService;
+import com.allianz.healthtourism.util.base.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

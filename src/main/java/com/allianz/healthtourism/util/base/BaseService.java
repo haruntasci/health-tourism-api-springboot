@@ -1,6 +1,8 @@
-package com.allianz.healthtourism.util;
+package com.allianz.healthtourism.util.base;
 
 import com.allianz.healthtourism.model.PageDTO;
+import com.allianz.healthtourism.util.mapper.IBaseMapper;
+import com.allianz.healthtourism.util.repository.IBaseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,13 +26,13 @@ public abstract class BaseService<
     private final Specification specification;
 
     @Transactional
-    public DTO save(RequestDTO requestDTO) {
+    public DTO save(RequestDTO requestDTO){
         Entity entity = mapper.requestDtoToEntity(requestDTO);
         repository.save(entity);
         return mapper.entityToDto(entity);
     }
 
-    public DTO update(UUID uuid, RequestDTO requestDTO) {
+    public DTO update(UUID uuid, RequestDTO requestDTO){
         Entity existEntity = repository.findByUuid(uuid).orElse(null);
         if (existEntity != null) {
             Entity entity = mapper.requestDtoToExistEntity(requestDTO, existEntity);

@@ -1,6 +1,7 @@
-package com.allianz.healthtourism.util;
+package com.allianz.healthtourism.util.base;
 
 import com.allianz.healthtourism.model.SortDTO;
+import com.allianz.healthtourism.util.specification.SearchCriteria;
 import lombok.Data;
 
 import java.util.List;

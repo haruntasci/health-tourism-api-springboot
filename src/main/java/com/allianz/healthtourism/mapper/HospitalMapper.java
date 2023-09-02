@@ -3,7 +3,7 @@ package com.allianz.healthtourism.mapper;
 import com.allianz.healthtourism.database.entity.Hospital;
 import com.allianz.healthtourism.model.HospitalDTO;
 import com.allianz.healthtourism.model.requestDTO.HospitalRequestDTO;
-import com.allianz.healthtourism.util.IBaseMapper;
+import com.allianz.healthtourism.util.mapper.IBaseMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

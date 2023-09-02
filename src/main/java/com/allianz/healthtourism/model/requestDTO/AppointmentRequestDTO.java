@@ -1,9 +1,6 @@
 package com.allianz.healthtourism.model.requestDTO;
 
-import com.allianz.healthtourism.database.entity.Doctor;
-import com.allianz.healthtourism.database.entity.MedicalRecord;
-import com.allianz.healthtourism.util.BaseRequestDTO;
-import jakarta.persistence.Column;
+import com.allianz.healthtourism.util.base.BaseRequestDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -3,7 +3,6 @@ package com.allianz.healthtourism.configuration;
 import com.allianz.healthtourism.util.security.JWTFilter;
 import com.allianz.healthtourism.util.security.SecurityService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +23,13 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Autowired
-    private JWTFilter filter;
-    @Autowired
-    private SecurityService uds;
+
+    private final JWTFilter filter;
+    private final SecurityService uds;
+    public SecurityConfiguration(JWTFilter filter, SecurityService uds) {
+        this.filter = filter;
+        this.uds = uds;
+    }
 
 
     private static final String[] AUTH_WHITELIST = {
@@ -86,6 +88,7 @@ public class SecurityConfiguration {
 
 
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("security");
@@ -113,7 +116,6 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(
                         (request, response, authException) -> {
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-//                            throw new AuthenticationException("Unauthorized");
                         }
 
                 )

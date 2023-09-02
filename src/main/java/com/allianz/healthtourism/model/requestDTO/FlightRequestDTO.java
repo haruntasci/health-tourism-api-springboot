@@ -1,7 +1,6 @@
 package com.allianz.healthtourism.model.requestDTO;
 
-import com.allianz.healthtourism.database.entity.City;
-import com.allianz.healthtourism.util.BaseRequestDTO;
+import com.allianz.healthtourism.util.base.BaseRequestDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,7 @@ public class FlightRequestDTO extends BaseRequestDTO {
     private UUID departureCityUUID;
     private UUID arrivalCityUUID;
     private LocalDateTime departureTime;
-    private LocalDateTime landingTime;
+    private LocalDateTime arrivalTime;
     private Integer totalSeatCount;
     private Integer emptySeatCount;
 }

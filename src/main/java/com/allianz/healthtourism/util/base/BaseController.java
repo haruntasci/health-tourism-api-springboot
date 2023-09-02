@@ -1,8 +1,10 @@
-package com.allianz.healthtourism.util;
+package com.allianz.healthtourism.util.base;
 
 
 import com.allianz.healthtourism.model.PageDTO;
-import jakarta.validation.Path;
+import com.allianz.healthtourism.util.constants.Constants;
+import com.allianz.healthtourism.util.mapper.IBaseMapper;
+import com.allianz.healthtourism.util.repository.IBaseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public abstract class BaseController<
     }
 
     @PutMapping("{uuid}")
-    public ResponseEntity<DTO> update(@PathVariable UUID uuid, @RequestBody RequestDTO requestDTO) {
+    public ResponseEntity<DTO> update(@PathVariable UUID uuid, @RequestBody RequestDTO requestDTO){
         return new ResponseEntity<>(service.update(uuid, requestDTO), HttpStatus.OK);
     }
 

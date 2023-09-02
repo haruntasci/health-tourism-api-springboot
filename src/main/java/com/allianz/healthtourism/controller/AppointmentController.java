@@ -9,7 +9,7 @@ import com.allianz.healthtourism.model.requestDTO.AppointmentDateRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentMedicalRecordDTO;
 import com.allianz.healthtourism.service.AppointmentService;
-import com.allianz.healthtourism.util.BaseController;
+import com.allianz.healthtourism.util.base.BaseController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

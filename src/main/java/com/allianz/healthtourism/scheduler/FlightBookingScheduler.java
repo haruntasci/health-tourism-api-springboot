@@ -1,9 +1,11 @@
 package com.allianz.healthtourism.scheduler;
 
+import com.allianz.healthtourism.database.entity.Appointment;
 import com.allianz.healthtourism.database.entity.Flight;
 import com.allianz.healthtourism.database.entity.FlightBooking;
 import com.allianz.healthtourism.database.repository.FlightBookingRepository;
 import com.allianz.healthtourism.database.repository.FlightRepository;
+import com.allianz.healthtourism.util.constants.Constants;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,7 @@ public class FlightBookingScheduler {
     public void startEvaluation(UUID bookingUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(bookingUuid)) {
-            scheduleEvaluation(bookingUuid, 10, TimeUnit.MINUTES);
+            scheduleEvaluation(bookingUuid, Constants.SCHEDULER_DELAY, TimeUnit.MINUTES);
         }
     }
 
@@ -36,7 +38,8 @@ public class FlightBookingScheduler {
         if (booking != null) {
             Flight departureFlight = booking.getDepartureFlight();
             Flight returnFlight = booking.getReturnFlight();
-            if (booking.isPaid() && departureFlight != null && returnFlight != null) {
+            Appointment appointment = booking.getAppointment();
+            if (booking.isPaid() && departureFlight != null && returnFlight != null && appointment != null) {
                 confirmBooking(booking, departureFlight, returnFlight);
                 return true;
             } else {

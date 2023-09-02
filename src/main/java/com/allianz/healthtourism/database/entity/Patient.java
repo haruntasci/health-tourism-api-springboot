@@ -1,7 +1,6 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.allianz.healthtourism.util.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

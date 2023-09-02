@@ -1,6 +1,9 @@
-package com.allianz.healthtourism.util;
+package com.allianz.healthtourism.util.mapper;
 
 import com.allianz.healthtourism.model.PageDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseEntity;
+import com.allianz.healthtourism.util.base.BaseRequestDTO;
 import jakarta.persistence.MappedSuperclass;
 import org.mapstruct.MappingTarget;
 import org.springframework.data.domain.Page;

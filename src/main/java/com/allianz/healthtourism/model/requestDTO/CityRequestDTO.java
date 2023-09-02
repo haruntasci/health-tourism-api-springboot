@@ -1,7 +1,6 @@
 package com.allianz.healthtourism.model.requestDTO;
 
-import com.allianz.healthtourism.database.entity.Country;
-import com.allianz.healthtourism.util.BaseRequestDTO;
+import com.allianz.healthtourism.util.base.BaseRequestDTO;
 import lombok.Data;
 
 import java.util.UUID;

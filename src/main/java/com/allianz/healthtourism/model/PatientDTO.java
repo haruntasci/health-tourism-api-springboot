@@ -1,13 +1,8 @@
 package com.allianz.healthtourism.model;
 
 
-import com.allianz.healthtourism.database.entity.Appointment;
-import com.allianz.healthtourism.database.entity.City;
-import com.allianz.healthtourism.database.entity.Doctor;
-import com.allianz.healthtourism.util.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
 import lombok.Data;
-
-import java.util.Set;
 
 
 @Data

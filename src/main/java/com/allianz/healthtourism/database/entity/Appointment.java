@@ -1,6 +1,6 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.BaseEntity;
+import com.allianz.healthtourism.util.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 public class Appointment extends BaseEntity {
 
+
     @ManyToOne
     private Patient patient;
 
@@ -25,6 +26,12 @@ public class Appointment extends BaseEntity {
 
     @OneToOne
     private MedicalRecord medicalRecord;
+
+    @OneToOne(mappedBy = "appointment", orphanRemoval = true)
+    private FlightBooking flightBooking;
+
+    @OneToOne(mappedBy = "appointment", orphanRemoval = true)
+    private HotelBooking hotelBooking;
 
     @Column
     private LocalDateTime appointmentDateTime = LocalDateTime.now();

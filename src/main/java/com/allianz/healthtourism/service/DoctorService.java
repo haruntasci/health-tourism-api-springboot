@@ -6,11 +6,9 @@ import com.allianz.healthtourism.database.repository.DoctorRepository;
 import com.allianz.healthtourism.database.repository.HospitalRepository;
 import com.allianz.healthtourism.database.specification.DoctorSpecification;
 import com.allianz.healthtourism.mapper.DoctorMapper;
-import com.allianz.healthtourism.mapper.HospitalMapper;
 import com.allianz.healthtourism.model.DoctorDTO;
-import com.allianz.healthtourism.model.HospitalDTO;
 import com.allianz.healthtourism.model.requestDTO.DoctorRequestDTO;
-import com.allianz.healthtourism.util.BaseService;
+import com.allianz.healthtourism.util.base.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

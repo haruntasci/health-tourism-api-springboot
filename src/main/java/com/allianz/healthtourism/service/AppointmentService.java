@@ -10,15 +10,12 @@ import com.allianz.healthtourism.database.repository.MedicalRecordRepository;
 import com.allianz.healthtourism.database.repository.PatientRepository;
 import com.allianz.healthtourism.database.specification.AppointmentSpecification;
 import com.allianz.healthtourism.mapper.AppointmentMapper;
-import com.allianz.healthtourism.mapper.MedicalRecordMapper;
 import com.allianz.healthtourism.model.AppointmentDTO;
-import com.allianz.healthtourism.model.MedicalRecordDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentDateRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentMedicalRecordDTO;
 import com.allianz.healthtourism.scheduler.AppointmentScheduler;
-import com.allianz.healthtourism.util.BaseService;
-import lombok.AllArgsConstructor;
+import com.allianz.healthtourism.util.base.BaseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

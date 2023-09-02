@@ -1,7 +1,6 @@
 package com.allianz.healthtourism.model;
 
-import com.allianz.healthtourism.database.entity.Country;
-import com.allianz.healthtourism.util.BaseDTO;
+import com.allianz.healthtourism.util.base.BaseDTO;
 import lombok.Data;
 
 @Data

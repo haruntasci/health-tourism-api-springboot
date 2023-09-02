@@ -1,6 +1,6 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.BaseEntity;
+import com.allianz.healthtourism.util.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,11 +14,14 @@ import lombok.Data;
 )
 @Data
 public class HotelBooking extends BaseEntity {
-        @ManyToOne
-        private Hotel hotel;
-        @Column
-        private boolean isPaid;
-        @Column
-        private boolean isConfirmed;
+
+    @OneToOne
+    private Appointment appointment;
+    @ManyToOne
+    private Hotel hotel;
+    @Column
+    private boolean isPaid;
+    @Column
+    private boolean isConfirmed;
 }
 

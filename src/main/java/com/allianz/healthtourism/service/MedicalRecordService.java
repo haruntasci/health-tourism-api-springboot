@@ -6,7 +6,7 @@ import com.allianz.healthtourism.database.specification.MedicalRecordSpecificati
 import com.allianz.healthtourism.mapper.MedicalRecordMapper;
 import com.allianz.healthtourism.model.MedicalRecordDTO;
 import com.allianz.healthtourism.model.requestDTO.MedicalRecordRequestDTO;
-import com.allianz.healthtourism.util.BaseService;
+import com.allianz.healthtourism.util.base.BaseService;
 import org.springframework.stereotype.Service;
 
 @Service

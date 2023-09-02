@@ -2,6 +2,7 @@ package com.allianz.healthtourism.scheduler;
 
 import com.allianz.healthtourism.database.entity.*;
 import com.allianz.healthtourism.database.repository.*;
+import com.allianz.healthtourism.util.constants.Constants;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class AppointmentScheduler {
     public void startEvaluation(UUID appointmentUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(appointmentUuid)) {
-            scheduleEvaluation(appointmentUuid, 10, TimeUnit.MINUTES);
+            scheduleEvaluation(appointmentUuid, Constants.SCHEDULER_DELAY, TimeUnit.MINUTES);
         }
     }
 

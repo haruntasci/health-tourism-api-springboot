@@ -1,12 +1,9 @@
 package com.allianz.healthtourism.scheduler;
 
-import com.allianz.healthtourism.database.entity.Flight;
-import com.allianz.healthtourism.database.entity.FlightBooking;
-import com.allianz.healthtourism.database.entity.Hotel;
-import com.allianz.healthtourism.database.entity.HotelBooking;
+import com.allianz.healthtourism.database.entity.*;
 import com.allianz.healthtourism.database.repository.HotelBookingRepository;
 import com.allianz.healthtourism.database.repository.HotelRepository;
-import lombok.extern.slf4j.Slf4j;
+import com.allianz.healthtourism.util.constants.Constants;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +26,7 @@ public class HotelBookingScheduler {
     public void startEvaluation(UUID bookingUuid) {
         System.out.println("Entered into start evaluation");
         if (!evaluateBookingIfValid(bookingUuid)) {
-            scheduleEvaluation(bookingUuid, 10, TimeUnit.MINUTES);
+            scheduleEvaluation(bookingUuid, Constants.SCHEDULER_DELAY, TimeUnit.MINUTES);
         }
     }
 
@@ -37,7 +34,8 @@ public class HotelBookingScheduler {
         HotelBooking booking = getBookingByUUID(bookingUuid);
         if (booking != null) {
             Hotel hotel = booking.getHotel();
-            if (booking.isPaid() && hotel != null) {
+            Appointment appointment = booking.getAppointment();
+            if (booking.isPaid() && hotel != null && appointment != null) {
                 confirmBooking(booking, hotel);
                 return true;
             } else {

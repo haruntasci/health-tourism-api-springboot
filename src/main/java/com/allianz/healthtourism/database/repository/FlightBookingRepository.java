@@ -1,7 +1,7 @@
 package com.allianz.healthtourism.database.repository;
 
 import com.allianz.healthtourism.database.entity.FlightBooking;
-import com.allianz.healthtourism.util.IBaseRepository;
+import com.allianz.healthtourism.util.repository.IBaseRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
