@@ -29,7 +29,7 @@ The patient can perform all transactions on this site instead of wasting time on
    spring.datasource.username=yourUsername
    spring.datasource.password=yourPassword
 
-3. In Edit Configurations section write Active profiles: dev
+3. In Edit Configurations section write as Active profiles: dev
 ```  
 ### Class Diagram
 ![health-tourism-diag](https://github.com/haruntasci/health-tourism-api-springboot/assets/99567926/dfe4975e-4b3d-475f-8181-69e37ff91ff9)
