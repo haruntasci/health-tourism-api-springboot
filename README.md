@@ -43,7 +43,6 @@ There are 3 roles:
 1. Admin creates countries, cities, hospitals, doctors, flights, hotels.
 2. Patient creates a patient and an appointment. To create appointment, Patient selects doctor and adds appointment date.
 3. Patient selects suitable departure and return flights according to appointment date and city, and creates flight-booking.
-Conditions<br>
 - Departure flights' arrival time must be at least 4 hours before the appointment time.
 - Return flights' departure time must be at least 4 hours after the appointment time.
 - Departure flights' departure city must be the same as the patient's city.
@@ -52,7 +51,6 @@ Conditions<br>
 - Return flights' arrival city must be the same as the patient's city.
 - Patient selects suitable hotel according to appointment date and city, and creates hotel-booking.
 4. Patient selects suitable hotel according to appointment date and city, and creates hotel-booking.
-Conditions<br>
 - Departure flights' arrival time must be at least 4 hours before the appointment time.
 - Return flights' departure time must be at least 4 hours after the appointment time.
 - Departure flights' departure city must be the same as the patient's city.
