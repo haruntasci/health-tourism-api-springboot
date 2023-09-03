@@ -1,10 +1,10 @@
 # Health Tourism API
+👨‍⚕️🩺👴🏥🛌💉💊⚕️
 ## Table of Contents
 - [Description](#description)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contact](#contact)
 
 ## Description
 
@@ -65,6 +65,3 @@ There are 3 roles:
 - Hotel city must be same as doctors' city.
 5. Doctor creates a medical-record and adds it to appointment.
 
-## Contact
-
-Include contact information or community links where users can seek support, ask questions, report issues, or contribute to the project.
