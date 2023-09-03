@@ -7,7 +7,7 @@
 - [Class Diagram](#class-diagram)
 - [Roles](#roles)
 - [Usage](#usage)
-- [Postman](#postman)
+
 
 ## Description
 
@@ -68,6 +68,5 @@ There are 3 roles:
 - Hotel city must be same as doctors' city.
 5. Doctor creates a medical-record and adds it to appointment.
 
-  ## Postman
-  [Link](https://api.postman.com/collections/9589337-f18e4bbd-556d-43e0-85e9-72aefe16f0f5?access_key=PMAT-01H96D1XQ756Z0PCAHWX33NY53)
+
 
