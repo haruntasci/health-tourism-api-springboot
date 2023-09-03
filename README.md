@@ -60,6 +60,7 @@ There are 3 roles:
 - Hotel check-in time must be at least 1 day before the appointment time.
 - Hotel check-out time must be at least 1 day after the appointment time
 - Hotel city must be same as doctors' city.
+5. Doctor creates a medical-record and adds it to appointment.
 
 ## Contact
 
