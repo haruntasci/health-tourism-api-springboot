@@ -5,6 +5,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Class Diagram](#class-diagram)
+- [Roles](#roles)
 - [Usage](#usage)
 
 ## Description
