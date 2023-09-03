@@ -1,12 +1,9 @@
 # Health Tourism API
 ## Table of Contents
 - [Description](#description)
-- [Getting Started](#getting-started)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contribute](#contribute)
-- [License](#license)
 - [Contact](#contact)
 
 ## Description
