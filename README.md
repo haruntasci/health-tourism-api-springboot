@@ -33,7 +33,7 @@ The patient can perform all transactions on this site instead of wasting time on
 3. In Edit Configurations section write as Active profiles: dev
 ```  
 ### Class Diagram
-![health-tourism-diag](https://github.com/haruntasci/health-tourism-api-springboot/assets/99567926/08485d6a-2bdd-41ff-a682-879bab704419)
+![health-tourism-diag](https://github.com/haruntasci/health-tourism-api-springboot/assets/99567926/ff294842-a4ca-419a-acc9-aa7a0d68f256)
 
 ## Roles
 There are 3 roles:
