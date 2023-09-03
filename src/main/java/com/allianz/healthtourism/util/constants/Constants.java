@@ -12,14 +12,14 @@ public class Constants {
     public static final String CHECK_OUT_TIME_ERROR_MESSAGE = "" +
             "Check-out time must be at least 1 day after the appointment time";
     public static final String DEPARTURE_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE = "" +
-            "Departure city must be same as the patient's city";
+            "Departure city must be same as the patients' city";
     public static final String DEPARTURE_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE = "" +
-            "Arrival city must be same as doctor's city.";
+            "Arrival city must be same as doctors' city.";
     public static final String RETURN_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE = "" +
-            "Departure city must be same as doctor's city.";
+            "Departure city must be same as doctors' city.";
     public static final String RETURN_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE = "" +
-            "Arrival city must be same as patient's city.";
+            "Arrival city must be same as patients' city.";
     public static final String HOTEL_CITY_ERROR_MESSAGE = "" +
-            "Hotel city must be same as doctor's city.";
+            "Hotel city must be same as doctors' city.";
     public static final long SCHEDULER_DELAY = 1;
 }

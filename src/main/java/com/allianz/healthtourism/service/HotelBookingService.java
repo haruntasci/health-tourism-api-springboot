@@ -17,6 +17,7 @@ import com.allianz.healthtourism.util.service.BaseService;
 import com.allianz.healthtourism.util.constants.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -70,7 +71,8 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
         return super.deleteByUUID(uuid);
     }
 
-    private void updateEmptyRoomsInHotel(UUID uuid) {
+    @Transactional
+    public void updateEmptyRoomsInHotel(UUID uuid) {
         HotelBooking hotelBooking = getHotelBookingByUUID(uuid);
         if (hotelBooking != null && hotelBooking.isConfirmed()) {
             Hotel hotel = hotelBooking.getHotel();
@@ -98,10 +100,10 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
     private boolean checkTimeAvailability(Appointment appointment, Hotel hotel) {
         try {
             if (hotel.getCheckIn().compareTo(appointment.getAppointmentDateTime().minusDays(1)) > 0) {
-                log.error("Check-in time is not suitable for the appointment.");
+                log.error(Constants.CHECK_IN_TIME_ERROR_MESSAGE);
                 throw new TimeIsNotSuitableException(Constants.CHECK_IN_TIME_ERROR_MESSAGE);
             } else if (hotel.getCheckOut().compareTo(appointment.getAppointmentDateTime().plusDays(1)) < 0) {
-                log.error("Check-out time is not suitable for the appointment.");
+                log.error(Constants.CHECK_OUT_TIME_ERROR_MESSAGE);
                 throw new TimeIsNotSuitableException(Constants.CHECK_OUT_TIME_ERROR_MESSAGE);
             } else {
                 return true;
@@ -114,7 +116,7 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
     private boolean checkCitySuitable(Appointment appointment, Hotel hotel) {
         try {
             if (!appointment.getDoctor().getHospital().getCity().equals(hotel.getCity())) {
-                log.error("Hotel city is not the same as the doctor's city");
+                log.error(Constants.HOTEL_CITY_ERROR_MESSAGE);
                 throw new CityIsNotSuitableException(Constants.HOTEL_CITY_ERROR_MESSAGE);
             } else {
                 return true;

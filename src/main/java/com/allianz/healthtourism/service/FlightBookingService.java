@@ -92,7 +92,8 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
         return flightBookingRepository.findByUuid(uuid).orElse(null);
     }
 
-    private void updateEmptySeatCountsInFlights(UUID uuid) {
+    @Transactional
+    public void updateEmptySeatCountsInFlights(UUID uuid) {
         FlightBooking flightBooking = getFlightBookingByUUID(uuid);
         if (flightBooking != null && flightBooking.isConfirmed()) {
             Flight departureFlight = flightBooking.getDepartureFlight();
@@ -107,10 +108,10 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     private boolean checkTimeAvailability(Appointment appointment, Flight departureFlight, Flight returnFlight) {
         try {
             if (departureFlight.getArrivalTime().compareTo(appointment.getAppointmentDateTime().minusHours(4)) > 0) {
-                log.error("Departure flight time is not suitable for the appointment.");
+                log.error(Constants.DEPARTURE_FLIGHT_TIME_ERROR_MESSAGE);
                 throw new TimeIsNotSuitableException(Constants.DEPARTURE_FLIGHT_TIME_ERROR_MESSAGE);
             } else if (returnFlight.getDepartureTime().compareTo(appointment.getAppointmentDateTime().plusHours(4)) < 0) {
-                log.error("Return flight time is not suitable for the appointment.");
+                log.error(Constants.RETURN_FLIGHT_TIME_ERROR_MESSAGE);
                 throw new TimeIsNotSuitableException(Constants.RETURN_FLIGHT_TIME_ERROR_MESSAGE);
             } else {
                 return true;
@@ -123,16 +124,16 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     private boolean checkCitiesSuitable(Appointment appointment, Flight departureFlight, Flight returnFlight) {
         try {
             if (!appointment.getPatient().getCity().equals(departureFlight.getDepartureCity())) {
-                log.error("Departure Flight: Departure city is not the same as the patient's city");
+                log.error(Constants.DEPARTURE_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE);
                 throw new CityIsNotSuitableException(Constants.DEPARTURE_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE);
             } else if (!appointment.getDoctor().getHospital().getCity().equals(departureFlight.getArrivalCity())) {
-                log.error("Departure Flight: Arrival city is not the same as doctor's city.");
+                log.error(Constants.DEPARTURE_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE);
                 throw new CityIsNotSuitableException(Constants.DEPARTURE_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE);
             } else if (!appointment.getPatient().getCity().equals(returnFlight.getArrivalCity())) {
-                log.error("Return Flight: Arrival city is not the same as patient's city.");
+                log.error(Constants.RETURN_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE);
                 throw new CityIsNotSuitableException(Constants.RETURN_FLIGHT_ARRIVAL_CITY_ERROR_MESSAGE);
             } else if (!appointment.getDoctor().getHospital().getCity().equals(returnFlight.getDepartureCity())) {
-                log.error("Return Flight: Departure city is not the same as doctor's city.");
+                log.error(Constants.RETURN_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE);
                 throw new CityIsNotSuitableException(Constants.RETURN_FLIGHT_DEPARTURE_CITY_ERROR_MESSAGE);
             } else {
                 return true;
