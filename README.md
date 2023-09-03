@@ -43,16 +43,25 @@ There are 3 roles:
 1. Admin creates countries, cities, hospitals, doctors, flights, hotels.
 2. Patient creates a patient and an appointment. To create appointment, Patient selects doctor and adds appointment date.
 3. Patient selects suitable departure and return flights according to appointment date and city, and creates flight-booking.
+#### Conditions
+- Departure flights' arrival time must be at least 4 hours before the appointment time.
+- Return flights' departure time must be at least 4 hours after the appointment time.
+- Departure flights' departure city must be the same as the patient's city.
+- Departure flights' arrival city must be the same as the doctor's city.
+- Return flights' departure city must be the same as the doctor's city.
+- Return flights' arrival city must be the same as the patient's city.
+- Patient selects suitable hotel according to appointment date and city, and creates hotel-booking.
 4. Patient selects suitable hotel according to appointment date and city, and creates hotel-booking.
-5. Departure flights' arrival time must be at least 4 hours before the appointment time.
-6. Return flights' departure time must be at least 4 hours after the appointment time.
-7. Departure flights' departure city must be the same as the patient's city.
-8. Departure flights' arrival city must be the same as the doctor's city.
-9. Return flights' departure city must be the same as the doctor's city.
-10. Return flights' arrival city must be the same as the patient's city.
-11. Hotel check-in time must be at least 1 day before the appointment time.
-12. Hotel check-out time must be at least 1 day after the appointment time
-13. Hotel city must be same as doctors' city.
+#### Conditions
+- Departure flights' arrival time must be at least 4 hours before the appointment time.
+- Return flights' departure time must be at least 4 hours after the appointment time.
+- Departure flights' departure city must be the same as the patient's city.
+- Departure flights' arrival city must be the same as the doctor's city.
+- Return flights' departure city must be the same as the doctor's city.
+- Return flights' arrival city must be the same as the patient's city.
+- Hotel check-in time must be at least 1 day before the appointment time.
+- Hotel check-out time must be at least 1 day after the appointment time
+- Hotel city must be same as doctors' city.
 
 ## Contact
 
