@@ -6,7 +6,7 @@ import com.allianz.healthtourism.database.specification.CountrySpecification;
 import com.allianz.healthtourism.mapper.CountryMapper;
 import com.allianz.healthtourism.model.CountryDTO;
 import com.allianz.healthtourism.model.requestDTO.CountryRequestDTO;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import org.springframework.stereotype.Service;
 
 @Service

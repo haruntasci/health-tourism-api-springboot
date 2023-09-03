@@ -13,7 +13,7 @@ import com.allianz.healthtourism.mapper.HotelBookingMapper;
 import com.allianz.healthtourism.model.HotelBookingDTO;
 import com.allianz.healthtourism.model.requestDTO.HotelBookingRequestDTO;
 import com.allianz.healthtourism.scheduler.HotelBookingScheduler;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import com.allianz.healthtourism.util.constants.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,8 +32,8 @@ public class HotelBookingService extends BaseService<HotelBooking, HotelBookingD
     private final HotelBookingScheduler hotelBookingScheduler;
 
     public HotelBookingService(HotelBookingRepository repository, HotelBookingMapper mapper,
-                               HotelBookingSpecification specification,
-                               AppointmentRepository appointmentRepository, HotelRepository hotelRepository, HotelBookingRepository hotelBookingRepository,
+                               HotelBookingSpecification specification, AppointmentRepository appointmentRepository,
+                               HotelRepository hotelRepository, HotelBookingRepository hotelBookingRepository,
                                HotelBookingMapper hotelBookingMapper, HotelBookingScheduler hotelBookingScheduler) {
         super(repository, mapper, specification);
         this.appointmentRepository = appointmentRepository;

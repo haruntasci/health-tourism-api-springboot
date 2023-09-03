@@ -1,4 +1,4 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.specification;
 
 import com.allianz.healthtourism.model.enums.OperationTypeEnum;
-import com.allianz.healthtourism.util.specification.SearchCriteria;
+import com.allianz.healthtourism.util.entity.BaseEntity;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 

@@ -1,4 +1,4 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.model;
 
 import lombok.Data;
 

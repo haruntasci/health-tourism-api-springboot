@@ -30,7 +30,8 @@ public class HotelBookingScheduler {
         }
     }
 
-    private boolean evaluateBookingIfValid(UUID bookingUuid) {
+    @Transactional
+    public boolean evaluateBookingIfValid(UUID bookingUuid) {
         HotelBooking booking = getBookingByUUID(bookingUuid);
         if (booking != null) {
             Hotel hotel = booking.getHotel();

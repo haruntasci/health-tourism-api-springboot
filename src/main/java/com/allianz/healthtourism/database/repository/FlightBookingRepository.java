@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface FlightBookingRepository  extends IBaseRepository<FlightBooking> {
-    @Query("SELECT fb FROM FlightBooking fb WHERE fb.isPaid = false AND fb.creationDate < :twoMinutesAgo")
-    List<FlightBooking> findIncompleteBookings(@Param("twoMinutesAgo") LocalDateTime tenMinutesAgo);
+
 }

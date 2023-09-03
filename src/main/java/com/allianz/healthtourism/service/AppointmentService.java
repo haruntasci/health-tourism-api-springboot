@@ -15,7 +15,7 @@ import com.allianz.healthtourism.model.requestDTO.AppointmentDateRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentMedicalRecordDTO;
 import com.allianz.healthtourism.scheduler.AppointmentScheduler;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +46,6 @@ public class AppointmentService extends BaseService<Appointment, AppointmentDTO,
         this.appointmentScheduler = appointmentScheduler;
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
-
         this.medicalRecordRepository = medicalRecordRepository;
     }
 

@@ -33,7 +33,8 @@ public class FlightBookingScheduler {
         }
     }
 
-    private boolean evaluateBookingIfValid(UUID bookingUuid) {
+    @Transactional
+    public boolean evaluateBookingIfValid(UUID bookingUuid) {
         FlightBooking booking = getBookingByUUID(bookingUuid);
         if (booking != null) {
             Flight departureFlight = booking.getDepartureFlight();

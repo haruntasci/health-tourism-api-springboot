@@ -1,4 +1,4 @@
-package com.allianz.healthtourism.util.exception;
+package com.allianz.healthtourism.util.advisor;
 
 import com.allianz.healthtourism.exception.CityIsNotSuitableException;
 import com.allianz.healthtourism.exception.TimeIsNotSuitableException;

@@ -1,6 +1,6 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.base.BaseEntity;
+import com.allianz.healthtourism.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

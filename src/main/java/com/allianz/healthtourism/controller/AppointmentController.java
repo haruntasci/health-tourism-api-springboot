@@ -9,7 +9,7 @@ import com.allianz.healthtourism.model.requestDTO.AppointmentDateRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentRequestDTO;
 import com.allianz.healthtourism.model.requestDTO.AppointmentMedicalRecordDTO;
 import com.allianz.healthtourism.service.AppointmentService;
-import com.allianz.healthtourism.util.base.BaseController;
+import com.allianz.healthtourism.util.controller.BaseController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +44,7 @@ public class AppointmentController extends BaseController<Appointment, Appointme
     }
 
     @GetMapping("/get-patients-appointments/{identityNumber}")
-    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByPatientIdentityNumber(String identityNumber) {
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByPatientIdentityNumber(@PathVariable String identityNumber) {
         return new ResponseEntity<>(appointmentService.getAppointmentsByPatientIdentity(identityNumber), HttpStatus.OK);
     }
 

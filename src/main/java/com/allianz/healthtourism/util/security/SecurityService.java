@@ -4,7 +4,6 @@ import com.allianz.healthtourism.database.entity.Role;
 import com.allianz.healthtourism.database.entity.User;
 import com.allianz.healthtourism.database.repository.RoleRepository;
 import com.allianz.healthtourism.database.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,18 +19,19 @@ import java.util.Optional;
 public class SecurityService implements UserDetailsService {
 
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
+    private final UserRepository userRepository;
+
+    public SecurityService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         String roleString = "ROLE_";
         Optional<User> user = userRepository.findByEmail(email);
-
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Could not findUser with email =" + email);
+            throw new UsernameNotFoundException("Could not find User with email =" + email);
         }
         List<Role> roleEntities = new ArrayList<>(user.get().getRoles());
         roleString += roleEntities.get(0).getName();

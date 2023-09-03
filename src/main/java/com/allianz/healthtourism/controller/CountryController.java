@@ -7,7 +7,7 @@ import com.allianz.healthtourism.mapper.CountryMapper;
 import com.allianz.healthtourism.model.CountryDTO;
 import com.allianz.healthtourism.model.requestDTO.CountryRequestDTO;
 import com.allianz.healthtourism.service.CountryService;
-import com.allianz.healthtourism.util.base.BaseController;
+import com.allianz.healthtourism.util.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

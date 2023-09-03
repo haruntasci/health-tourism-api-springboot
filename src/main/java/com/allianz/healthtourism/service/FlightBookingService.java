@@ -13,7 +13,7 @@ import com.allianz.healthtourism.mapper.FlightBookingMapper;
 import com.allianz.healthtourism.model.FlightBookingDTO;
 import com.allianz.healthtourism.model.requestDTO.FlightBookingRequestDTO;
 import com.allianz.healthtourism.scheduler.FlightBookingScheduler;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import com.allianz.healthtourism.util.constants.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,8 +33,8 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     private final FlightBookingScheduler flightBookingScheduler;
 
     public FlightBookingService(FlightBookingRepository repository, FlightBookingMapper mapper,
-                                FlightBookingSpecification specification,
-                                AppointmentRepository appointmentRepository, FlightRepository flightRepository, FlightBookingRepository flightBookingRepository,
+                                FlightBookingSpecification specification, AppointmentRepository appointmentRepository,
+                                FlightRepository flightRepository, FlightBookingRepository flightBookingRepository,
                                 FlightBookingMapper flightBookingMapper, FlightBookingScheduler flightBookingScheduler) {
         super(repository, mapper, specification);
         this.appointmentRepository = appointmentRepository;
@@ -45,7 +45,6 @@ public class FlightBookingService extends BaseService<FlightBooking, FlightBooki
     }
 
     @Override
-    @Transactional
     public FlightBookingDTO save(FlightBookingRequestDTO requestDTO) {
         FlightBooking flightBooking = new FlightBooking();
         populateFlightBookingWithObjects(flightBooking, requestDTO);

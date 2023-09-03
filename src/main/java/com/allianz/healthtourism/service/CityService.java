@@ -9,7 +9,7 @@ import com.allianz.healthtourism.mapper.CityMapper;
 import com.allianz.healthtourism.mapper.CountryMapper;
 import com.allianz.healthtourism.model.CityDTO;
 import com.allianz.healthtourism.model.requestDTO.CityRequestDTO;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

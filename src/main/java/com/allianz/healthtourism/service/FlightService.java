@@ -8,7 +8,7 @@ import com.allianz.healthtourism.database.specification.FlightSpecification;
 import com.allianz.healthtourism.mapper.FlightMapper;
 import com.allianz.healthtourism.model.FlightDTO;
 import com.allianz.healthtourism.model.requestDTO.FlightRequestDTO;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

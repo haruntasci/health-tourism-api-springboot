@@ -1,4 +1,4 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.specification;
 
 import com.allianz.healthtourism.model.SortDTO;
 import com.allianz.healthtourism.util.specification.SearchCriteria;

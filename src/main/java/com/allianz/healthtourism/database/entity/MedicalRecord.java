@@ -1,6 +1,6 @@
 package com.allianz.healthtourism.database.entity;
 
-import com.allianz.healthtourism.util.base.BaseEntity;
+import com.allianz.healthtourism.util.entity.BaseEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

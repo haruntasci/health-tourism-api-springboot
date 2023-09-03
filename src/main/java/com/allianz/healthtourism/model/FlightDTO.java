@@ -1,7 +1,7 @@
 package com.allianz.healthtourism.model;
 
 
-import com.allianz.healthtourism.util.base.BaseDTO;
+import com.allianz.healthtourism.util.model.BaseDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;

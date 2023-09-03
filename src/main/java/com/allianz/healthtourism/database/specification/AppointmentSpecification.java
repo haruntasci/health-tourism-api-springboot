@@ -4,7 +4,7 @@ import com.allianz.healthtourism.database.entity.Appointment;
 import com.allianz.healthtourism.database.entity.Doctor;
 import com.allianz.healthtourism.database.entity.Patient;
 import com.allianz.healthtourism.model.enums.OperationTypeEnum;
-import com.allianz.healthtourism.util.base.BaseSpecification;
+import com.allianz.healthtourism.util.specification.BaseSpecification;
 import com.allianz.healthtourism.util.specification.SearchCriteria;
 import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Component;

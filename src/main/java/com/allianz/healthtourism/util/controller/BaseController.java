@@ -1,10 +1,16 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.controller;
 
 
 import com.allianz.healthtourism.model.PageDTO;
+import com.allianz.healthtourism.util.model.BaseDTO;
+import com.allianz.healthtourism.util.entity.BaseEntity;
+import com.allianz.healthtourism.util.model.BaseRequestDTO;
+import com.allianz.healthtourism.util.service.BaseService;
 import com.allianz.healthtourism.util.constants.Constants;
 import com.allianz.healthtourism.util.mapper.IBaseMapper;
 import com.allianz.healthtourism.util.repository.IBaseRepository;
+import com.allianz.healthtourism.util.specification.BaseFilterRequestDTO;
+import com.allianz.healthtourism.util.specification.BaseSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

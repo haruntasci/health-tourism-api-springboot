@@ -1,8 +1,13 @@
-package com.allianz.healthtourism.util.base;
+package com.allianz.healthtourism.util.service;
 
 import com.allianz.healthtourism.model.PageDTO;
+import com.allianz.healthtourism.util.model.BaseDTO;
+import com.allianz.healthtourism.util.model.BaseRequestDTO;
+import com.allianz.healthtourism.util.entity.BaseEntity;
 import com.allianz.healthtourism.util.mapper.IBaseMapper;
 import com.allianz.healthtourism.util.repository.IBaseRepository;
+import com.allianz.healthtourism.util.specification.BaseFilterRequestDTO;
+import com.allianz.healthtourism.util.specification.BaseSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +37,7 @@ public abstract class BaseService<
         return mapper.entityToDto(entity);
     }
 
+    @Transactional
     public DTO update(UUID uuid, RequestDTO requestDTO){
         Entity existEntity = repository.findByUuid(uuid).orElse(null);
         if (existEntity != null) {
@@ -44,7 +50,7 @@ public abstract class BaseService<
 
     }
 
-    @Transactional
+
     public PageDTO<DTO> getAll(BaseFilterRequestDTO baseFilterRequestDTO) {
         Pageable pageable;
         if (baseFilterRequestDTO.getSortDTO() != null) {
@@ -65,7 +71,6 @@ public abstract class BaseService<
         return mapper.pageEntityToPageDTO(entityPage);
     }
 
-    @Transactional
     public DTO getByUUID(UUID uuid) {
         Entity entity = repository.findByUuid(uuid).orElse(null);
         if (entity != null) {

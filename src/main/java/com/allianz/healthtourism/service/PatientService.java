@@ -8,7 +8,7 @@ import com.allianz.healthtourism.database.specification.PatientSpecification;
 import com.allianz.healthtourism.mapper.PatientMapper;
 import com.allianz.healthtourism.model.PatientDTO;
 import com.allianz.healthtourism.model.requestDTO.PatientRequestDTO;
-import com.allianz.healthtourism.util.base.BaseService;
+import com.allianz.healthtourism.util.service.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

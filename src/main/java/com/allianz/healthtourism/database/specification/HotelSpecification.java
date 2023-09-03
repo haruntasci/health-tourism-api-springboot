@@ -2,7 +2,7 @@ package com.allianz.healthtourism.database.specification;
 
 import com.allianz.healthtourism.database.entity.Hotel;
 import com.allianz.healthtourism.model.enums.OperationTypeEnum;
-import com.allianz.healthtourism.util.base.BaseSpecification;
+import com.allianz.healthtourism.util.specification.BaseSpecification;
 import com.allianz.healthtourism.util.specification.SearchCriteria;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

@@ -7,7 +7,7 @@ import com.allianz.healthtourism.mapper.HotelMapper;
 import com.allianz.healthtourism.model.HotelDTO;
 import com.allianz.healthtourism.model.requestDTO.HotelRequestDTO;
 import com.allianz.healthtourism.service.HotelService;
-import com.allianz.healthtourism.util.base.BaseController;
+import com.allianz.healthtourism.util.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
