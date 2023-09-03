@@ -22,9 +22,9 @@ The patient can perform all transactions on this site instead of wasting time on
 ```
 git clone https://github.com/haruntasci/health-tourism-api-springboot.git
 Edit properties according to your database information
-- spring.datasource.url=jdbc:postgresql:yourURL
-- spring.datasource.username=yourUsername
-- spring.datasource.password=yourPassword
+spring.datasource.url=jdbc:postgresql:yourURL
+spring.datasource.username=yourUsername
+spring.datasource.password=yourPassword
 In Edit Configurations section write Active profiles: dev
 ```  
 ### Class Diagram
