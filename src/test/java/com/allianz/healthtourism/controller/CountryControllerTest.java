@@ -69,6 +69,27 @@ class CountryControllerTest {
         );
     }
 
+    @Test
+    void getByUUID_shouldNotGetSuccessfully() {
+        //given
+        CountryDTO expected = new CountryDTO();
+        expected.setName("France");
+
+        when(mockCountryService.getByUUID(any())).thenReturn(null);
+
+        //when
+        ResponseEntity<CountryDTO> response = underTest.getByUUID(UUID.randomUUID());
+        CountryDTO actual = response.getBody();
+
+        //then
+        assertAll(
+                () -> assertNull(actual),
+                () -> assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode())
+        );
+
+
+    }
+
 
     @Test
     void deleteByUUID_shouldDeleteSuccessfully() {
@@ -78,7 +99,7 @@ class CountryControllerTest {
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-                () ->     assertEquals(Constants.DELETE_SUCCESS_MESSAGE, response.getBody())
+                () -> assertEquals(Constants.DELETE_SUCCESS_MESSAGE, response.getBody())
         );
     }
 
@@ -90,8 +111,39 @@ class CountryControllerTest {
 
         assertAll(
                 () -> assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode()),
-                () ->     assertEquals(Constants.DELETE_ERROR_MESSAGE, response.getBody())
+                () -> assertEquals(Constants.DELETE_ERROR_MESSAGE, response.getBody())
         );
     }
 
+    @Test
+    void update_shouldUpdateSuccessfully() {
+        // Given
+        CountryDTO expected = new CountryDTO();
+        expected.setName("Türkiye");
+        UUID uuid = UUID.randomUUID(); // Generate a random UUID
+
+        // Mock the service's update method
+        when(mockCountryService.update(any(UUID.class), any(CountryRequestDTO.class))).thenReturn(expected);
+
+        // Create a request with the data you want to update
+        CountryRequestDTO request = new CountryRequestDTO();
+        request.setName("Türkiye"); // Set the new data you want to update
+
+        // When
+        ResponseEntity<CountryDTO> response = underTest.update(uuid, request);
+        CountryDTO actual = response.getBody();
+
+        // Then
+        assertAll(
+                () -> assertNotNull(actual),
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
+                () -> assertEquals(expected, actual),
+                () -> assertEquals(expected.getName(), actual.getName())
+        );
+    }
+
+    @Test
+    void getAll_shouldReturnAllCountries() {
+
+    }
 }
